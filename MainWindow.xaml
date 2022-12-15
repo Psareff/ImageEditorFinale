@@ -10,6 +10,10 @@
     <Window.CommandBindings>
         <CommandBinding Command="{x:Static local:ImageEditorCustomStateCommands.SaveFile}" CanExecute="SaveFile_CanExecute" Executed="SaveFile_Executed"/>
         <CommandBinding Command="{x:Static local:ImageEditorCustomFunctionalCommands.ChangeHue}" CanExecute="ChangeHue_CanExecute" Executed="ChangeHue_Executed"/>
+        <CommandBinding Command="{x:Static local:ImageEditorCustomFunctionalCommands.AddImage}" CanExecute="AddImage_CanExecute" Executed="AddImage_Executed"/>
+        <CommandBinding Command="{x:Static local:ImageEditorCustomFunctionalCommands.AddText}" CanExecute="AddText_CanExecute" Executed="AddText_Executed"/>
+        <CommandBinding Command="{x:Static local:ImageEditorCustomFunctionalCommands.ChangeText}" CanExecute="ChangeText_CanExecute" Executed="ChangeText_Executed"/>
+        <CommandBinding Command="{x:Static local:ImageEditorCustomFunctionalCommands.RotateItem}" CanExecute="RotateItem_CanExecute" Executed="RotateItem_Executed"/>
         <CommandBinding Command="{x:Static local:ImageEditorCustomFunctionalCommands.CanvasDefaultScale}" CanExecute="CanvasDefaultScale_CanExecute" Executed="CanvasDefaultScale_Executed"/>
     </Window.CommandBindings>
     <Grid Background="#333333">
@@ -25,38 +29,49 @@
         </Grid.RowDefinitions>
         <Menu Grid.Row="0" Grid.ColumnSpan="3" Background="#444444">
             <MenuItem Header ="File" Foreground="#999999" Background="#444444">
-                <MenuItem Header="Save" Foreground="#999999" Background="#444444" Command="local:ImageEditorCustomStateCommands.SaveFile"/>
-                <MenuItem Header="Open" Foreground="#999999" Background="#444444"/>
+                <MenuItem Header="Save" Foreground="#999999" Background="#444444" BorderThickness="0" Command="local:ImageEditorCustomStateCommands.SaveFile"/>
+                <MenuItem Header="Open" Foreground="#999999" Background="#444444" BorderThickness="0"/>
             </MenuItem>
             <MenuItem Header ="Edit" Foreground="#999999">
-                <MenuItem Header="Crop Image" Foreground="#999999" Background="#444444"/>
-                <MenuItem Header="Rotate Image" Foreground="#999999" Background="#444444"/>
-                <MenuItem Header="Resize Image" Foreground="#999999" Background="#444444"/>
-                <MenuItem Header="Resize Canvas" Foreground="#999999" Background="#444444"/>
+                <MenuItem Header="Crop Image" Foreground="#999999" Background="#444444" BorderThickness="0"/>
+                <MenuItem Header="Rotate Image" Foreground="#999999" Background="#444444" BorderThickness="0"/>
+                <MenuItem Header="Resize Image" Foreground="#999999" Background="#444444" BorderThickness="0"/>
+                <MenuItem Header="Resize Canvas" Foreground="#999999" Background="#444444" BorderThickness="0"/>
             </MenuItem>
-            <MenuItem Header ="Filter" Foreground="#999999" Background="#444444">
-                <MenuItem Header="Sepia" Foreground="#999999" Background="#444444"/>
-                <MenuItem Header="GrayScale" Foreground="#999999" Background="#444444"/>
-                <MenuItem Header="Black and White" Foreground="#999999" Background="#444444"/>
+            <MenuItem Header ="Filter" Foreground="#999999" Background="#444444" BorderThickness="0">
+                <MenuItem Header="Sepia" Foreground="#999999" Background="#444444" BorderThickness="0"/>
+                <MenuItem Header="GrayScale" Foreground="#999999" Background="#444444" BorderThickness="0"/>
+                <MenuItem Header="Black and White" Foreground="#999999" Background="#444444" BorderThickness="0"/>
             </MenuItem>
-            <MenuItem Header ="About" Foreground="#999999" Background="#444444">
-                <MenuItem Header="About Program" Foreground="#999999" Background="#444444"/>
-                <MenuItem Header="Copyright" Foreground="#999999" Background="#444444"/>
+            <MenuItem Header ="About" Foreground="#999999" Background="#444444" BorderThickness="0">
+                <MenuItem Header="About Program" Foreground="#999999" Background="#444444" BorderThickness="0"/>
+                <MenuItem Header="Copyright" Foreground="#999999" Background="#444444" BorderThickness="0"/>
             </MenuItem>
         </Menu>
         <StackPanel Grid.Row="1" Grid.Column="0" Width="auto" Height="auto" Background="#333333">
-            <Button Width="25" Height="25" Name="Hue" Content="Hue" Foreground="#999999" Background="#222222" Command="local:ImageEditorCustomFunctionalCommands.ChangeHue" />
-            <Button Width="25" Height="25" Name="Sat" Content="Sat"  Foreground="#999999" Background="#222222"/>
-            <Button Width="25" Height="25" Name="Val" Content="Val"  Foreground="#999999" Background="#222222"/>
-            <Button Width="25" Height="25" Name="Im" Content="Im"   Foreground="#999999" Background="#222222"/>
-            <Button Width="25" Height="25" Name="Txt" Content="Txt"  Foreground="#999999" Background="#222222"/>
-            <Button Width="25" Height="25" Name="Del"  Content="-"  Foreground="#999999" Background="#222222"/>
-            <Button Width="25" Height="25" Name="Scale100"  Content="0,0"  Foreground="#999999" Background="#222222" Command="local:ImageEditorCustomFunctionalCommands.CanvasDefaultScale"/>
-
+            <Button Width="25" Height="25" Name="Hue" Content="Hue" Foreground="#999999" Background="#222222" BorderThickness="0" Command="local:ImageEditorCustomFunctionalCommands.ChangeHue" />
+            <Button Width="25" Height="25" Name="Sat" Content="Sat"  Foreground="#999999" Background="#222222" BorderThickness="0" />
+            <Button Width="25" Height="25" Name="Val" Content="Val"  Foreground="#999999" Background="#222222" BorderThickness="0"/>
+            <Button Width="25" Height="25" Name="Im" Content="Im"   Foreground="#999999" Background="#222222" BorderThickness="0" Command="local:ImageEditorCustomFunctionalCommands.AddImage"/>
+            <Button Width="25" Height="25" Name="Txt" Content="Txt"  Foreground="#999999" Background="#222222" BorderThickness="0" Command="local:ImageEditorCustomFunctionalCommands.AddText"/>
+            <Button Width="25" Height="25" Name="Del"  Content="Del"  Foreground="#999999" Background="#222222" BorderThickness="0"/>
+            <Button Width="25" Height="25" Name="Scale100"  Content="0,0"  Foreground="#999999" Background="#222222" BorderThickness="0" Command="local:ImageEditorCustomFunctionalCommands.CanvasDefaultScale"/>
 
         </StackPanel>
+
         <StackPanel Height="auto" Grid.Row="1" Grid.Column="2" Background="#333333">
-            
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Text="Height" Foreground="White"/>
+                <TextBox x:Name="HeightSetter" Width="50" Height="14" Foreground ="White" Background="Transparent" CommandManager.Executed="ResizeImage_Executed" CommandManager.CanExecute="ResizeImage_CanExecute"/>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Text="Text" Foreground="White"/>
+                <TextBox x:Name="TextSetter" Width="50" Height="14" Foreground ="White" Background="Transparent" CommandManager.Executed="ChangeText_Executed" CommandManager.CanExecute="ChangeText_CanExecute"/>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Text="Rotate" Foreground="White"/>
+                <TextBox x:Name="RotationSetter" Width="50" Height="14" Foreground ="White" Background="Transparent" CommandManager.Executed="RotateItem_Executed" CommandManager.CanExecute="RotateItem_CanExecute"/>
+            </StackPanel>
         </StackPanel>
 
         <Canvas Grid.Row="1" Grid.Column="1" Background="#222222" Panel.ZIndex="-1">

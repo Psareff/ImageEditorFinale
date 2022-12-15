@@ -13,6 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Diagnostics;
+using Microsoft.Win32;
 
 namespace ImageEditorFinale
 {
@@ -21,17 +22,20 @@ namespace ImageEditorFinale
     /// </summary>
     public partial class MainWindow : Window
     {
+        private ItemAlbum _itemAlbum;
         public MainWindow()
         {
+            _itemAlbum = new ItemAlbum();
             InitializeComponent();
         }
 
         private void SaveFile_CanExecute(object sender, CanExecuteRoutedEventArgs e) => e.CanExecute = true;
         private void OpenFile_CanExecute(object sender, CanExecuteRoutedEventArgs e) => e.CanExecute = true;
         private void CropImage_CanExecute(object sender, CanExecuteRoutedEventArgs e) => e.CanExecute = true;
-        private void RotateImage_CanExecute(object sender, CanExecuteRoutedEventArgs e) => e.CanExecute = true;
+        private void RotateItem_CanExecute(object sender, CanExecuteRoutedEventArgs e) => e.CanExecute = true;
         private void ResizeImage_CanExecute(object sender, CanExecuteRoutedEventArgs e) => e.CanExecute = true;
         private void ResizeCanvas_CanExecute(object sender, CanExecuteRoutedEventArgs e) => e.CanExecute = true;
+        private void ChangeText_CanExecute(object sender, CanExecuteRoutedEventArgs e) => e.CanExecute = true;
         private void SepiaFilter_CanExecute(object sender, CanExecuteRoutedEventArgs e) => e.CanExecute = true;
         private void GrayScaleFilter_CanExecute(object sender, CanExecuteRoutedEventArgs e) => e.CanExecute = true;
         private void BlackandWhiteFilter_CanExecute(object sender, CanExecuteRoutedEventArgs e) => e.CanExecute = true;
@@ -50,14 +54,28 @@ namespace ImageEditorFinale
         {
 
         }
-        private void RotateImage_Executed(object sender, ExecutedRoutedEventArgs e)
+        private void RotateItem_Executed(object sender, ExecutedRoutedEventArgs e)
         {
-
+            ImageEditorItem imageEditorItem = workspace.SelectedItem();
+            if (imageEditorItem != null)
+            {
+                RotateTransform rotateTransform = new RotateTransform(Convert.ToDouble(RotationSetter.Text));
+                imageEditorItem.RenderTransform = rotateTransform;
+            }
         }
         private void ResizeImage_Executed(object sender, ExecutedRoutedEventArgs e)
         {
-
+            ImageEditorItem imageViewModel = workspace.SelectedItem();
+            if (imageViewModel != null && imageViewModel is ImageViewModel)
+                (imageViewModel as ImageViewModel)._image.Height = Convert.ToDouble(HeightSetter.Text);
         }
+        private void ChangeText_Executed(object sender, ExecutedRoutedEventArgs e)
+        {
+            ImageEditorItem textBoxViewModel = workspace.SelectedItem();
+            if (textBoxViewModel != null && textBoxViewModel is TextBoxViewModel)
+                (textBoxViewModel as TextBoxViewModel).ChangeText(TextSetter.Text);
+        }
+
         private void ResizeCanvas_Executed(object sender, ExecutedRoutedEventArgs e)
         {
 
@@ -108,12 +126,23 @@ namespace ImageEditorFinale
 
         private void AddImage_Executed(object sender, ExecutedRoutedEventArgs e)
         {
-            Trace.WriteLine("Hue Change window");
+            OpenFileDialog openFileDialog = new OpenFileDialog();
+            openFileDialog.Filter = "Image files (*.jpg, *.png, etc.) | *.jpg; *.png";
+            openFileDialog.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyPictures);
+            if (openFileDialog.ShowDialog() == true)
+            {
+                ImageEditorItem photo = new ImageEditorItem(new Point(0,0));
+                _itemAlbum.Items.Add(photo);
+                workspace.Children.Add(new ImageViewModel(photo, openFileDialog.FileName));
+            }
         }
 
         private void AddText_Executed(object sender, ExecutedRoutedEventArgs e)
         {
-            Trace.WriteLine("Hue Change window");
+            Trace.WriteLine("Text added");
+            ImageEditorItem text = new ImageEditorItem(new Point(0, 0));
+            _itemAlbum.Items.Add(text);
+            workspace.Children.Add(new TextBoxViewModel(text));
         }
 
         private void DeleteItem_Executed(object sender, ExecutedRoutedEventArgs e)
@@ -121,12 +150,12 @@ namespace ImageEditorFinale
             Trace.WriteLine("Hue Change window");
         }
 
+        #region CanvasScale handler
         private void CanvasDefaultScale_Executed(object sender, ExecutedRoutedEventArgs e)
         {
             Trace.WriteLine("Canvas Default Scale");
             var element = workspace;
             var transform = (MatrixTransform)element.RenderTransform;
-
             transform.Matrix = Matrix.Identity;
         }
 
@@ -136,14 +165,12 @@ namespace ImageEditorFinale
             var position = e.GetPosition(element);
             var transform = (MatrixTransform)element.RenderTransform;
             var matrix = transform.Matrix;
-            Trace.WriteLine(transform.Matrix.M11);
+            var scaleDelta = e.Delta >= 0 ? 1.1 : (1.0 / 1.1);
 
-            var scrollDirection = e.Delta >= 0 ? 1.1 : (1.0 / 1.1);
-
-            var scaleDelta = (transform.Matrix.M11 * 1 < 0.25  || transform.Matrix.M11 > 5) ? 1.0); // choose appropriate scaling factor
-            Scale.Text = Convert.ToInt32(transform.Matrix.M11*100)  + "%"; 
+            Scale.Text = Convert.ToInt32(Math.Round(transform.Matrix.M11, 4)*100)  + "%"; 
             matrix.ScaleAtPrepend(scaleDelta, scaleDelta, position.X, position.Y);
             transform.Matrix = matrix;
         }
+        #endregion
     }
 }
