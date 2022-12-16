@@ -21,6 +21,7 @@ namespace ImageEditorFinale
         private ImageEditorItem _imageEditorItem;
 
         public Image _image;
+        private BitmapImage _bitmapImage;
         private string _filename;
 
 
@@ -38,18 +39,23 @@ namespace ImageEditorFinale
             _imageEditorItem = imageEditorItem;
             _filename = filename;
 
-            BitmapImage bitmapImage = new BitmapImage();
-            bitmapImage.BeginInit();
-            bitmapImage.UriSource = new Uri(filename, UriKind.Absolute);
-            bitmapImage.EndInit();
-            Trace.Write("Width: " + bitmapImage.Width+ "; Height: " + bitmapImage.Height);
+            _bitmapImage = new BitmapImage();
+            _bitmapImage.BeginInit();
+            _bitmapImage.UriSource = new Uri(filename, UriKind.Absolute);
+            _bitmapImage.EndInit();
             Panel.SetZIndex(this, -2);
             _image = new Image();
-            _image.Source = bitmapImage;
+            _image.Source = _bitmapImage;
             Child = _image;
             Canvas.SetLeft(this, _imageEditorItem._location.X);
             Canvas.SetTop(this, _imageEditorItem._location.Y);
 
+        }
+
+        public BitmapImage bitmapImage
+        {
+            get => _bitmapImage;
+            set => _bitmapImage = value;
         }
 
         public string filename

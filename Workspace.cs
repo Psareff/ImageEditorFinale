@@ -83,6 +83,14 @@ namespace ImageEditorFinale
                 return ImageViewModelDragging;
             return null;
         }
+
+        public void SetImage(ImageViewModel imageViewModel)
+        {
+           // ImageViewModelDragging = imageViewModel;
+            this.Children.Remove(ImageViewModelDragging);
+            this.Children.Add(imageViewModel);
+            Trace.WriteLine("Set image handled");
+        }
         
         public void DeselectAll() => ImageViewModelDragging.Deselect();
 

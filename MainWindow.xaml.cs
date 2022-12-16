@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Documents;
@@ -14,6 +13,8 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Diagnostics;
 using Microsoft.Win32;
+using System.Drawing;
+using System.IO;
 
 namespace ImageEditorFinale
 {
@@ -44,7 +45,7 @@ namespace ImageEditorFinale
 
         private void SaveFile_Executed(object sender, ExecutedRoutedEventArgs e)
         {
-            Trace.WriteLine("File Saved");
+
         }
         private void OpenFile_Executed(object sender, ExecutedRoutedEventArgs e)
         {
@@ -82,14 +83,29 @@ namespace ImageEditorFinale
         }
         private void SepiaFilter_Executed(object sender, ExecutedRoutedEventArgs e)
         {
-
+                
         }
         private void GrayScaleFilter_Executed(object sender, ExecutedRoutedEventArgs e)
         {
+            ImageEditorItem imageViewModel = workspace.SelectedItem();
+            if (imageViewModel != null && imageViewModel is ImageViewModel)
+            {
+                workspace.SetImage(Filters.ConvertToGrayScale(imageViewModel as ImageViewModel));
+                var encoder = new JpegBitmapEncoder(); // Or any other, e.g. PngBitmapEncoder for PNG.
+                encoder.Frames.
+                    Add(BitmapFrame.Create(imageViewModel as ImageViewModel).bitmapImage)
+                        ));
+                encoder.QualityLevel = 100; // Set quality level 1-100.
 
+                using (var stream = new FileStream(@"D:\OutputImage.jpg", FileMode.Create))
+                {
+                    encoder.Save(stream);
+                }
+            }
         }
         private void BlackandWhiteFilter_Executed(object sender, ExecutedRoutedEventArgs e)
         {
+
 
         }
         private void AboutMenu_Executed(object sender, ExecutedRoutedEventArgs e)
