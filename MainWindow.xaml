@@ -9,7 +9,13 @@
         Title="MainWindow" Height="450" Width="800">
     <Window.CommandBindings>
         <CommandBinding Command="{x:Static local:ImageEditorCustomStateCommands.SaveFile}" CanExecute="SaveFile_CanExecute" Executed="SaveFile_Executed"/>
+        
         <CommandBinding Command="{x:Static local:ImageEditorCustomStateCommands.GrayScaleFilter}" CanExecute="GrayScaleFilter_CanExecute" Executed="GrayScaleFilter_Executed"/>
+        <CommandBinding Command="{x:Static local:ImageEditorCustomStateCommands.BlackAndWhiteFilter}" CanExecute="BlackandWhiteFilter_CanExecute" Executed="BlackAndWhiteFilter_Executed"/>
+        <CommandBinding Command="{x:Static local:ImageEditorCustomStateCommands.NegativeFilter}" CanExecute="NegativeFilter_CanExecute" Executed="NegativeFilter_Executed"/>
+        <CommandBinding Command="{x:Static local:ImageEditorCustomStateCommands.SepiaFilter}" CanExecute="SepiaFilter_CanExecute" Executed="SepiaFilter_Executed"/>
+        <CommandBinding Command="{x:Static local:ImageEditorCustomStateCommands.DefaultFilter}" CanExecute="DefaultFilter_CanExecute" Executed="DefaultFilter_Executed"/>
+        
         <CommandBinding Command="{x:Static local:ImageEditorCustomFunctionalCommands.ChangeHue}" CanExecute="ChangeHue_CanExecute" Executed="ChangeHue_Executed"/>
         <CommandBinding Command="{x:Static local:ImageEditorCustomFunctionalCommands.AddImage}" CanExecute="AddImage_CanExecute" Executed="AddImage_Executed"/>
         <CommandBinding Command="{x:Static local:ImageEditorCustomFunctionalCommands.AddText}" CanExecute="AddText_CanExecute" Executed="AddText_Executed"/>
@@ -40,9 +46,11 @@
                 <MenuItem Header="Resize Canvas" Foreground="#999999" Background="#444444" BorderThickness="0"/>
             </MenuItem>
             <MenuItem Header ="Filter" Foreground="#999999" Background="#444444" BorderThickness="0">
-                <MenuItem Header="Sepia" Foreground="#999999" Background="#444444" BorderThickness="0"/>
+                <MenuItem Header="Sepia" Foreground="#999999" Background="#444444" BorderThickness="0" Command="local:ImageEditorCustomStateCommands.SepiaFilter"/>
                 <MenuItem Header="GrayScale" Foreground="#999999" Background="#444444" BorderThickness="0" Command="local:ImageEditorCustomStateCommands.GrayScaleFilter"/>
-                <MenuItem Header="Black and White" Foreground="#999999" Background="#444444" BorderThickness="0"/>
+                <MenuItem Header="Black and White" Foreground="#999999" Background="#444444" BorderThickness="0"  Command="local:ImageEditorCustomStateCommands.BlackAndWhiteFilter"/>
+                <MenuItem Header="Negative" Foreground="#999999" Background="#444444" BorderThickness="0" Command="local:ImageEditorCustomStateCommands.NegativeFilter"/>
+                <MenuItem Header="Default" Foreground="#999999" Background="#444444" BorderThickness="0" Command="local:ImageEditorCustomStateCommands.DefaultFilter"/>
             </MenuItem>
             <MenuItem Header ="About" Foreground="#999999" Background="#444444" BorderThickness="0">
                 <MenuItem Header="About Program" Foreground="#999999" Background="#444444" BorderThickness="0"/>

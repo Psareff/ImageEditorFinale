@@ -13,8 +13,8 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Diagnostics;
 using Microsoft.Win32;
-using System.Drawing;
 using System.IO;
+using System.Windows;
 
 namespace ImageEditorFinale
 {
@@ -37,9 +37,13 @@ namespace ImageEditorFinale
         private void ResizeImage_CanExecute(object sender, CanExecuteRoutedEventArgs e) => e.CanExecute = true;
         private void ResizeCanvas_CanExecute(object sender, CanExecuteRoutedEventArgs e) => e.CanExecute = true;
         private void ChangeText_CanExecute(object sender, CanExecuteRoutedEventArgs e) => e.CanExecute = true;
+
         private void SepiaFilter_CanExecute(object sender, CanExecuteRoutedEventArgs e) => e.CanExecute = true;
         private void GrayScaleFilter_CanExecute(object sender, CanExecuteRoutedEventArgs e) => e.CanExecute = true;
         private void BlackandWhiteFilter_CanExecute(object sender, CanExecuteRoutedEventArgs e) => e.CanExecute = true;
+        private void NegativeFilter_CanExecute(object sender, CanExecuteRoutedEventArgs e) => e.CanExecute = true;
+        private void DefaultFilter_CanExecute(object sender, CanExecuteRoutedEventArgs e) => e.CanExecute = true;
+
         private void AboutMenu_CanExecute(object sender, CanExecuteRoutedEventArgs e) => e.CanExecute = true;
         private void Copyright_CanExecute(object sender, CanExecuteRoutedEventArgs e) => e.CanExecute = true;
 
@@ -83,30 +87,49 @@ namespace ImageEditorFinale
         }
         private void SepiaFilter_Executed(object sender, ExecutedRoutedEventArgs e)
         {
-                
+            ImageEditorItem imageViewModel = workspace.SelectedItem();
+            if (imageViewModel != null && imageViewModel is ImageViewModel)
+            {
+                workspace.Children.Remove(imageViewModel);
+                workspace.SetImage(Filter.ApplyFilter(imageViewModel as ImageViewModel, ColorMatrixes.SepiaTone));
+            }
         }
         private void GrayScaleFilter_Executed(object sender, ExecutedRoutedEventArgs e)
         {
             ImageEditorItem imageViewModel = workspace.SelectedItem();
             if (imageViewModel != null && imageViewModel is ImageViewModel)
             {
-                workspace.SetImage(Filters.ConvertToGrayScale(imageViewModel as ImageViewModel));
-                var encoder = new JpegBitmapEncoder(); // Or any other, e.g. PngBitmapEncoder for PNG.
-                encoder.Frames.
-                    Add(BitmapFrame.Create(imageViewModel as ImageViewModel).bitmapImage)
-                        ));
-                encoder.QualityLevel = 100; // Set quality level 1-100.
-
-                using (var stream = new FileStream(@"D:\OutputImage.jpg", FileMode.Create))
-                {
-                    encoder.Save(stream);
-                }
+                workspace.Children.Remove(imageViewModel);
+                workspace.SetImage(Filter.ApplyFilter(imageViewModel as ImageViewModel, ColorMatrixes.GrayScale));
             }
         }
-        private void BlackandWhiteFilter_Executed(object sender, ExecutedRoutedEventArgs e)
+        private void BlackAndWhiteFilter_Executed(object sender, ExecutedRoutedEventArgs e)
         {
+            ImageEditorItem imageViewModel = workspace.SelectedItem();
+            if (imageViewModel != null && imageViewModel is ImageViewModel)
+            {
+                workspace.Children.Remove(imageViewModel);
+                workspace.SetImage(Filter.ApplyFilter(imageViewModel as ImageViewModel, ColorMatrixes.BlackAndWhite));
+            }
+        }
 
-
+        private void NegativeFilter_Executed(object sender, ExecutedRoutedEventArgs e)
+        {
+            ImageEditorItem imageViewModel = workspace.SelectedItem();
+            if (imageViewModel != null && imageViewModel is ImageViewModel)
+            {
+                workspace.Children.Remove(imageViewModel);
+                workspace.SetImage(Filter.ApplyFilter(imageViewModel as ImageViewModel, ColorMatrixes.Negative));
+            }
+        }
+        private void DefaultFilter_Executed(object sender, ExecutedRoutedEventArgs e)
+        {
+            ImageEditorItem imageViewModel = workspace.SelectedItem();
+            if (imageViewModel != null && imageViewModel is ImageViewModel)
+            {
+                workspace.Children.Remove(imageViewModel);
+                workspace.SetImage(Filter.ApplyFilter(imageViewModel as ImageViewModel, ColorMatrixes.Default));
+            }
         }
         private void AboutMenu_Executed(object sender, ExecutedRoutedEventArgs e)
         {

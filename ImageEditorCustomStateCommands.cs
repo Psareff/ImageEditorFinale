@@ -76,13 +76,29 @@ namespace ImageEditorFinale
             {
                 new KeyGesture(Key.D2 , ModifierKeys.Control)
             });
-        public static readonly RoutedUICommand BlackandWhiteFilter = new RoutedUICommand(
+        public static readonly RoutedUICommand BlackAndWhiteFilter = new RoutedUICommand(
             "BlackandWhiteFilter",
             "BlackandWhiteFilter",
             typeof(ImageEditorCustomStateCommands),
             new InputGestureCollection()
             {
                 new KeyGesture(Key.D3 , ModifierKeys.Control)
+            });
+        public static readonly RoutedUICommand NegativeFilter = new RoutedUICommand(
+            "NegativeFilter",
+            "NegativeFilter",
+            typeof(ImageEditorCustomStateCommands),
+            new InputGestureCollection()
+            {
+                new KeyGesture(Key.D4 , ModifierKeys.Control)
+            });
+        public static readonly RoutedUICommand DefaultFilter = new RoutedUICommand(
+            "DefaultFilter",
+            "DefaultFilter",
+            typeof(ImageEditorCustomStateCommands),
+            new InputGestureCollection()
+            {
+                new KeyGesture(Key.D0 , ModifierKeys.Control)
             });
         #endregion
 

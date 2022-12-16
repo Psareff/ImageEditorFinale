@@ -21,8 +21,9 @@ using System.Drawing.Imaging;
 
 namespace ImageEditorFinale
 {
-    internal static  class Converter
+    internal  class Converter
     {
+
         public static Bitmap FromBitmapImagetoBitmap(BitmapImage bitmapImage)
         {
             // BitmapImage bitmapImage = new BitmapImage(new Uri("../Images/test.png", UriKind.Relative));
@@ -55,6 +56,5 @@ namespace ImageEditorFinale
                 return bitmapImage;
             }
         }
-
     }
 }
