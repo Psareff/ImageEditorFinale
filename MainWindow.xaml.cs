@@ -57,7 +57,11 @@ namespace ImageEditorFinale
         }
         private void CropImage_Executed(object sender, ExecutedRoutedEventArgs e)
         {
-
+            ImageEditorItem imageViewModel = workspace.SelectedItem();
+            if (imageViewModel != null && imageViewModel is ImageViewModel)
+            {
+                //(imageViewModel as ImageViewModel)._image.Source;
+            }
         }
         private void RotateItem_Executed(object sender, ExecutedRoutedEventArgs e)
         {
@@ -70,9 +74,18 @@ namespace ImageEditorFinale
         }
         private void ResizeImage_Executed(object sender, ExecutedRoutedEventArgs e)
         {
+
+
             ImageEditorItem imageViewModel = workspace.SelectedItem();
+            ResizeWindow resizeWindow = new ResizeWindow(imageViewModel as ImageViewModel);
+            resizeWindow.Show();
+            /*
             if (imageViewModel != null && imageViewModel is ImageViewModel)
                 (imageViewModel as ImageViewModel)._image.Height = Convert.ToDouble(HeightSetter.Text);
+            
+            if (imageViewModel != null && imageViewModel is ImageViewModel)
+                (imageViewModel as ImageViewModel)._image.Width = Convert.ToDouble(WidthSetter.Text);
+            */
         }
         private void ChangeText_Executed(object sender, ExecutedRoutedEventArgs e)
         {
@@ -83,7 +96,8 @@ namespace ImageEditorFinale
 
         private void ResizeCanvas_Executed(object sender, ExecutedRoutedEventArgs e)
         {
-
+            workspace.Height = Convert.ToDouble(HeightSetter.Text);
+            workspace.Width = Convert.ToDouble(WidthSetter.Text);
         }
         private void SepiaFilter_Executed(object sender, ExecutedRoutedEventArgs e)
         {
@@ -170,9 +184,10 @@ namespace ImageEditorFinale
             openFileDialog.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyPictures);
             if (openFileDialog.ShowDialog() == true)
             {
-                ImageEditorItem photo = new ImageEditorItem(new Point(0,0));
-                _itemAlbum.Items.Add(photo);
-                workspace.Children.Add(new ImageViewModel(photo, openFileDialog.FileName));
+                //ImageEditorItem photo = new ImageEditorItem(new Point(0,0));
+                ImageViewModel imageViewModel = new ImageViewModel(new Point(0, 0), openFileDialog.FileName);
+                _itemAlbum.Items.Add(imageViewModel);
+                workspace.Children.Add(imageViewModel);
             }
         }
 
@@ -186,7 +201,8 @@ namespace ImageEditorFinale
 
         private void DeleteItem_Executed(object sender, ExecutedRoutedEventArgs e)
         {
-            Trace.WriteLine("Hue Change window");
+            _itemAlbum.Items.Remove(workspace.SelectedItem());
+            workspace.Children.Remove(workspace.SelectedItem());
         }
 
         #region CanvasScale handler

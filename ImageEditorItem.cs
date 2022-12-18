@@ -16,7 +16,7 @@ using System.Diagnostics;
 
 namespace ImageEditorFinale
 {
-    internal class ImageEditorItem : Border
+    public class ImageEditorItem : Border
     {
         public Point _location;
 

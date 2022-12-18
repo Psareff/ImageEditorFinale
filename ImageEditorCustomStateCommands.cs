@@ -34,11 +34,8 @@ namespace ImageEditorFinale
         public static readonly RoutedUICommand CropImage = new RoutedUICommand(
             "CropImage",
             "CropImage",
-            typeof(ImageEditorCustomStateCommands),
-            new InputGestureCollection()
-            {
-                new KeyGesture(Key.X , ModifierKeys.Control)
-            });
+            typeof(ImageEditorCustomStateCommands)
+            );
         public static readonly RoutedUICommand RotateImage = new RoutedUICommand(
             "RotateImage",
             "RotateImage",

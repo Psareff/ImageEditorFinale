@@ -9,6 +9,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Media3D;
 using System.Diagnostics;
+using System.Windows.Shapes;
 
 namespace ImageEditorFinale
 {
@@ -17,6 +18,11 @@ namespace ImageEditorFinale
         private ImageEditorItem _elementBeingDragged;
         public MatrixTransform _matrixTransform;
         public Matrix _matrix;
+
+        public ImageEditorItem ItemDragging { get; set; }
+        private Point _startPoint;
+        private Point _currentPoint;
+        private bool _isMoving;
 
         public Workspace()
         {
@@ -34,10 +40,6 @@ namespace ImageEditorFinale
             }
         }
 
-        public ImageEditorItem ImageViewModelDragging { get; set; }
-        private Point _startPoint;
-        private Point _currentPoint;
-        private bool _isMoving;
 
         public UIElement FindChild(DependencyObject dependencyObject)
         {
@@ -54,6 +56,34 @@ namespace ImageEditorFinale
             return dependencyObject as UIElement;
         }
 
+
+        public ImageEditorItem SelectedItem()
+        {
+            if (ItemDragging != null)
+                return ItemDragging;
+            return null;
+        }
+
+        public void SetImage(ImageViewModel imageViewModel)
+        {
+           // ImageViewModelDragging = imageViewModel;
+            this.Children.Remove(ItemDragging);
+            this.Children.Add(imageViewModel);
+            Trace.WriteLine("Set image handled");
+        }
+        
+        public void DeselectAll() => ItemDragging.Deselect();
+
+        protected override void OnPreviewMouseLeftButtonUp(MouseButtonEventArgs e)
+        {
+            base.OnPreviewMouseLeftButtonUp(e);
+            if (ItemDragging != null)
+            {
+                ItemDragging.ReleaseMouseCapture();
+            }
+            this._isMoving = false;
+        }
+
         protected override void OnPreviewMouseLeftButtonDown(MouseButtonEventArgs e)
         {
             base.OnPreviewMouseLeftButtonDown(e);
@@ -61,64 +91,43 @@ namespace ImageEditorFinale
             this._startPoint = e.GetPosition(this);
 
             this.ElementBeingDragged = null;
-            //this.PhotoViewDragging = null;
 
             this.ElementBeingDragged = this.FindChild(e.Source as DependencyObject) as ImageEditorItem;
 
-            if (ImageViewModelDragging != null)
-                ImageViewModelDragging.Deselect();
+            if (ItemDragging != null)
+            {
+                ItemDragging.Deselect();
+            }
             if (ElementBeingDragged != null && ElementBeingDragged is ImageEditorItem)
             {
-                ImageViewModelDragging = ElementBeingDragged;
-                ImageViewModelDragging.Select();
-                ImageViewModelDragging.CaptureMouse();
+                ItemDragging = ElementBeingDragged;
+                ItemDragging.Select();
+                ItemDragging.CaptureMouse();
                 this._isMoving = true;
-
             }
-        }
 
-        public ImageEditorItem SelectedItem()
-        {
-            if (ImageViewModelDragging != null)
-                return ImageViewModelDragging;
-            return null;
         }
-
-        public void SetImage(ImageViewModel imageViewModel)
-        {
-           // ImageViewModelDragging = imageViewModel;
-            this.Children.Remove(ImageViewModelDragging);
-            this.Children.Add(imageViewModel);
-            Trace.WriteLine("Set image handled");
-        }
-        
-        public void DeselectAll() => ImageViewModelDragging.Deselect();
-
-        protected override void OnPreviewMouseLeftButtonUp(MouseButtonEventArgs e)
-        {
-            base.OnPreviewMouseLeftButtonUp(e);
-            if (ImageViewModelDragging != null)
-            {
-                ImageViewModelDragging.ReleaseMouseCapture();
-            }
-            this._isMoving = false;
-        }
-
         protected override void OnPreviewMouseMove(MouseEventArgs e)
         {
             base.OnPreviewMouseMove(e);
 
             if (_isMoving == true && e.LeftButton == MouseButtonState.Pressed)
             {
-                _currentPoint = e.GetPosition(this);
-                ((ImageEditorItem)ElementBeingDragged)._location.X += _currentPoint.X - _startPoint.X;
-                ((ImageEditorItem)ElementBeingDragged)._location.Y += _currentPoint.Y - _startPoint.Y;
-                Canvas.SetLeft(ElementBeingDragged, ((ImageEditorItem)ElementBeingDragged)._location.X);
-                Canvas.SetTop(ElementBeingDragged, ((ImageEditorItem)ElementBeingDragged)._location.Y);
+                    _currentPoint = e.GetPosition(this);
+                if (ElementBeingDragged != null && ElementBeingDragged is ImageEditorItem)
+                {
+                    (ElementBeingDragged)._location.X += _currentPoint.X - _startPoint.X;
+                    (ElementBeingDragged)._location.Y += _currentPoint.Y - _startPoint.Y;
+                    Canvas.SetLeft(ElementBeingDragged, ElementBeingDragged._location.X);
+                    Canvas.SetTop(ElementBeingDragged, ElementBeingDragged._location.Y);
 
-                _startPoint = _currentPoint;
+                    _startPoint = _currentPoint;
+                }
+
             }
+
         }
+
 
     }
 }

@@ -28,6 +28,15 @@ namespace ImageEditorFinale
                 new KeyGesture(Key.A , ModifierKeys.Control)
                }
            );
+        public static readonly RoutedUICommand DeleteItem = new RoutedUICommand(
+           "DeleteItem",
+           "DeleteItem",
+           typeof(ImageEditorCustomStateCommands),
+           new InputGestureCollection()
+               {
+                new KeyGesture(Key.X , ModifierKeys.Control)
+               }
+           );
         public static readonly RoutedUICommand RotateItem = new RoutedUICommand(
            "RotateItem",
            "RotateItem",

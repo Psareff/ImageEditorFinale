@@ -15,10 +15,14 @@
         <CommandBinding Command="{x:Static local:ImageEditorCustomStateCommands.NegativeFilter}" CanExecute="NegativeFilter_CanExecute" Executed="NegativeFilter_Executed"/>
         <CommandBinding Command="{x:Static local:ImageEditorCustomStateCommands.SepiaFilter}" CanExecute="SepiaFilter_CanExecute" Executed="SepiaFilter_Executed"/>
         <CommandBinding Command="{x:Static local:ImageEditorCustomStateCommands.DefaultFilter}" CanExecute="DefaultFilter_CanExecute" Executed="DefaultFilter_Executed"/>
+
+        <CommandBinding Command="{x:Static local:ImageEditorCustomStateCommands.CropImage}" CanExecute="CropImage_CanExecute" Executed="CropImage_Executed"/>
+        <CommandBinding Command="{x:Static local:ImageEditorCustomStateCommands.ResizeImage}" CanExecute="ResizeImage_CanExecute" Executed="ResizeImage_Executed"/>
         
         <CommandBinding Command="{x:Static local:ImageEditorCustomFunctionalCommands.ChangeHue}" CanExecute="ChangeHue_CanExecute" Executed="ChangeHue_Executed"/>
         <CommandBinding Command="{x:Static local:ImageEditorCustomFunctionalCommands.AddImage}" CanExecute="AddImage_CanExecute" Executed="AddImage_Executed"/>
         <CommandBinding Command="{x:Static local:ImageEditorCustomFunctionalCommands.AddText}" CanExecute="AddText_CanExecute" Executed="AddText_Executed"/>
+        <CommandBinding Command="{x:Static local:ImageEditorCustomFunctionalCommands.DeleteItem}" CanExecute="DeleteItem_CanExecute" Executed="DeleteItem_Executed"/>
         <CommandBinding Command="{x:Static local:ImageEditorCustomFunctionalCommands.ChangeText}" CanExecute="ChangeText_CanExecute" Executed="ChangeText_Executed"/>
         <CommandBinding Command="{x:Static local:ImageEditorCustomFunctionalCommands.RotateItem}" CanExecute="RotateItem_CanExecute" Executed="RotateItem_Executed"/>
         <CommandBinding Command="{x:Static local:ImageEditorCustomFunctionalCommands.CanvasDefaultScale}" CanExecute="CanvasDefaultScale_CanExecute" Executed="CanvasDefaultScale_Executed"/>
@@ -40,9 +44,9 @@
                 <MenuItem Header="Open" Foreground="#999999" Background="#444444" BorderThickness="0"/>
             </MenuItem>
             <MenuItem Header ="Edit" Foreground="#999999">
-                <MenuItem Header="Crop Image" Foreground="#999999" Background="#444444" BorderThickness="0"/>
+                <MenuItem Header="Crop Image" Foreground="#999999" Background="#444444" BorderThickness="0" Command="local:ImageEditorCustomStateCommands.CropImage"/>
                 <MenuItem Header="Rotate Image" Foreground="#999999" Background="#444444" BorderThickness="0"/>
-                <MenuItem Header="Resize Image" Foreground="#999999" Background="#444444" BorderThickness="0"/>
+                <MenuItem Header="Resize Image" Foreground="#999999" Background="#444444" BorderThickness="0" Command="local:ImageEditorCustomStateCommands.ResizeImage"/>
                 <MenuItem Header="Resize Canvas" Foreground="#999999" Background="#444444" BorderThickness="0"/>
             </MenuItem>
             <MenuItem Header ="Filter" Foreground="#999999" Background="#444444" BorderThickness="0">
@@ -63,7 +67,7 @@
             <Button Width="25" Height="25" Name="Val" Content="Val"  Foreground="#999999" Background="#222222" BorderThickness="0"/>
             <Button Width="25" Height="25" Name="Im" Content="Im"   Foreground="#999999" Background="#222222" BorderThickness="0" Command="local:ImageEditorCustomFunctionalCommands.AddImage"/>
             <Button Width="25" Height="25" Name="Txt" Content="Txt"  Foreground="#999999" Background="#222222" BorderThickness="0" Command="local:ImageEditorCustomFunctionalCommands.AddText"/>
-            <Button Width="25" Height="25" Name="Del"  Content="Del"  Foreground="#999999" Background="#222222" BorderThickness="0"/>
+            <Button Width="25" Height="25" Name="Del"  Content="Del"  Foreground="#999999" Background="#222222" BorderThickness="0" Command="local:ImageEditorCustomFunctionalCommands.DeleteItem"/>
             <Button Width="25" Height="25" Name="Scale100"  Content="0,0"  Foreground="#999999" Background="#222222" BorderThickness="0" Command="local:ImageEditorCustomFunctionalCommands.CanvasDefaultScale"/>
 
         </StackPanel>
@@ -72,6 +76,10 @@
             <StackPanel Orientation="Horizontal">
                 <TextBlock Text="Height" Foreground="White"/>
                 <TextBox x:Name="HeightSetter" Width="50" Height="14" Foreground ="White" Background="Transparent" CommandManager.Executed="ResizeImage_Executed" CommandManager.CanExecute="ResizeImage_CanExecute"/>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Text="Width" Foreground="White"/>
+                <TextBox x:Name="WidthSetter" Width="50" Height="14" Foreground ="White" Background="Transparent" CommandManager.Executed="ResizeImage_Executed" CommandManager.CanExecute="ResizeImage_CanExecute"/>
             </StackPanel>
             <StackPanel Orientation="Horizontal">
                 <TextBlock Text="Text" Foreground="White"/>

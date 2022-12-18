@@ -12,4 +12,13 @@
     <PackageReference Include="FontAwesome5" Version="2.1.11" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="ColorCorrection\" />
+    <Folder Include="Commands\" />
+    <Folder Include="GitattributesAndGitIgnore\" />
+    <Folder Include="ImageEditorModels\" />
+    <Folder Include="ImageEditorViewModels\" />
+    <Folder Include="ImageEditorViews\ImageEditorStateWindows\" />
+  </ItemGroup>
+
 </Project>

@@ -16,9 +16,8 @@ using System.Diagnostics;
 
 namespace ImageEditorFinale
 {
-    internal class ImageViewModel : ImageEditorItem
+    public class ImageViewModel : ImageEditorItem
     {
-        private ImageEditorItem _imageEditorItem;
 
         public Image _image;
         private BitmapImage _bitmapImage;
@@ -27,28 +26,25 @@ namespace ImageEditorFinale
 
         public ImageViewModel()
         {
-            _imageEditorItem = new ImageEditorItem();
+
         }
-        public ImageEditorItem Photo
+
+        public ImageViewModel(Point location, string filename) : base (location)
         {
-            get => _imageEditorItem;
-            set => _imageEditorItem = value;
-        }
-        public ImageViewModel(ImageEditorItem imageEditorItem, string filename)
-        {
-            _imageEditorItem = imageEditorItem;
             _filename = filename;
 
             _bitmapImage = new BitmapImage();
             _bitmapImage.BeginInit();
             _bitmapImage.UriSource = new Uri(filename, UriKind.Absolute);
             _bitmapImage.EndInit();
-            Panel.SetZIndex(this, -2);
+            Panel.SetZIndex(this, 2);
             _image = new Image();
             _image.Source = _bitmapImage;
+            _image.Stretch = Stretch.Fill;
             Child = _image;
-            Canvas.SetLeft(this, _imageEditorItem._location.X);
-            Canvas.SetTop(this, _imageEditorItem._location.Y);
+            Trace.WriteLine(filename);
+            Canvas.SetLeft(this, base._location.X);
+            Canvas.SetTop(this, base._location.Y);
 
         }
 
@@ -69,5 +65,6 @@ namespace ImageEditorFinale
             get => _filename;
             set => _filename = value;
         }
+
     }
 }

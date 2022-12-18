@@ -16,23 +16,22 @@ using System.Diagnostics;
 
 namespace ImageEditorFinale
 {
-    internal class TextBoxViewModel : ImageEditorItem
+    public class TextBoxViewModel : ImageEditorItem
     {
         private TextBlock _textBlock;
 
-        private ImageEditorItem _imageEditorItem;
 
 
         public TextBoxViewModel(ImageEditorItem imageEditorItem)
         {
-            _imageEditorItem = imageEditorItem;
+            //_imageEditorItem = imageEditorItem;
             _textBlock = new TextBlock();
             _textBlock.Text = "Enter your text here";
             _textBlock.FontSize = 28;
             _textBlock.Foreground = Brushes.Black;
             Child = _textBlock;
-            Canvas.SetLeft(this, _imageEditorItem._location.X);
-            Canvas.SetTop(this, _imageEditorItem._location.Y);
+            Canvas.SetLeft(this, base._location.X);
+            Canvas.SetTop(this, base._location.Y);
         }
 
         public void ChangeText(string newText)
