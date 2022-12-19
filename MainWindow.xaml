@@ -36,7 +36,7 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"/>
             <RowDefinition/>
-            <RowDefinition Height="10"/>
+            <RowDefinition Height="15"/>
         </Grid.RowDefinitions>
         <Menu Grid.Row="0" Grid.ColumnSpan="3" Background="#444444">
             <MenuItem Header ="File" Foreground="#999999" Background="#444444">
@@ -99,9 +99,9 @@
             </local:Workspace>
         </Canvas>
         
-        <Grid Grid.ColumnSpan="3" Grid.Row="3" Background="#444444">
-            <TextBlock Text="Scale: " FontSize="7" Foreground="White"/>
-            <TextBlock Name="Scale" FontSize="7" Foreground="White" Margin="20,0,0,0"/>
-        </Grid>
+        <StackPanel Grid.ColumnSpan="3" Grid.Row="3" Background="#444444" Orientation="Horizontal">
+            <TextBlock Text="Scale: " FontSize="12" Foreground="White"/>
+            <TextBlock Name="Scale" FontSize="12" Foreground="White"/>
+        </StackPanel>
     </Grid>
 </Window>

@@ -57,11 +57,16 @@ namespace ImageEditorFinale
         }
         private void CropImage_Executed(object sender, ExecutedRoutedEventArgs e)
         {
-            ImageEditorItem imageViewModel = workspace.SelectedItem();
+            ImageViewModel imageViewModel = workspace.SelectedItem() as ImageViewModel;
+            CropWindow resizeWindow = new CropWindow(imageViewModel);
+            //resizeWindow.Show();
+            /*
             if (imageViewModel != null && imageViewModel is ImageViewModel)
             {
                 //(imageViewModel as ImageViewModel)._image.Source;
             }
+
+            */
         }
         private void RotateItem_Executed(object sender, ExecutedRoutedEventArgs e)
         {
@@ -75,17 +80,11 @@ namespace ImageEditorFinale
         private void ResizeImage_Executed(object sender, ExecutedRoutedEventArgs e)
         {
 
-
             ImageEditorItem imageViewModel = workspace.SelectedItem();
-            ResizeWindow resizeWindow = new ResizeWindow(imageViewModel as ImageViewModel);
+            ResizeWindow resizeWindow = new ResizeWindow((imageViewModel as ImageViewModel)._image);
             resizeWindow.Show();
-            /*
-            if (imageViewModel != null && imageViewModel is ImageViewModel)
-                (imageViewModel as ImageViewModel)._image.Height = Convert.ToDouble(HeightSetter.Text);
-            
-            if (imageViewModel != null && imageViewModel is ImageViewModel)
-                (imageViewModel as ImageViewModel)._image.Width = Convert.ToDouble(WidthSetter.Text);
-            */
+
+
         }
         private void ChangeText_Executed(object sender, ExecutedRoutedEventArgs e)
         {

@@ -13,12 +13,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="ColorCorrection\" />
-    <Folder Include="Commands\" />
-    <Folder Include="GitattributesAndGitIgnore\" />
-    <Folder Include="ImageEditorModels\" />
-    <Folder Include="ImageEditorViewModels\" />
-    <Folder Include="ImageEditorViews\ImageEditorStateWindows\" />
+    <Page Include="App.xaml" />
   </ItemGroup>
 
 </Project>
