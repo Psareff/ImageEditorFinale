@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:ImageEditorFinale"
         mc:Ignorable="d"
         Title="CropWindow" Height="450" Width="800">
-    <Canvas Name="CroppingCanvas" Width="auto" Height="auto">
+    <Canvas Name="CroppingCanvas" Width="800" Height="435">
         <Button>ABCDEF</Button>
     </Canvas>
 </Window>

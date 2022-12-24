@@ -57,7 +57,7 @@ namespace ImageEditorFinale
             set => _bitmapImage = value;
         }
 
-        public Image SetImage
+        public Image Image
         {
             get => _image;
             set => _image = value;

@@ -22,7 +22,7 @@ namespace ImageEditorFinale
 
 
 
-        public TextBoxViewModel(ImageEditorItem imageEditorItem)
+        public TextBoxViewModel()
         {
             //_imageEditorItem = imageEditorItem;
             _textBlock = new TextBlock();
@@ -38,5 +38,6 @@ namespace ImageEditorFinale
         {
             this._textBlock.Text = newText;
         }
+
     }
 }

@@ -19,15 +19,17 @@ namespace ImageEditorFinale
     /// </summary>
     public partial class CropWindow : Window
     {
-        private ImageViewModel _imageViewModel;
+        private ImageViewModel _image;
 
-        public CropWindow(ImageViewModel imageViewModel)
+        public CropWindow(ImageViewModel image)
         {
-            _imageViewModel = imageViewModel.CreateDeepCopy();
-            CroppingCanvas.Width = _imageViewModel._image.ActualWidth;
-            CroppingCanvas.Height = _imageViewModel._image.ActualHeight;
-            CroppingCanvas.Children.Add(_imageViewModel);
             InitializeComponent();
+            /*
+            _image = new ImageViewModel(image._image);
+            CroppingCanvas.Width = image._image.ActualWidth;
+            CroppingCanvas.Height = image._image.ActualHeight;
+            CroppingCanvas.Children.Add(new ImageViewModel(image._image));
+            */
         }
     }
 }

@@ -30,7 +30,7 @@ namespace ImageEditorFinale
 
 
             }
-            image.SetImage.Source = Converter.BitmapToBitmapImage(dest);
+            image.Image.Source = Converter.BitmapToBitmapImage(dest);
             return image;
 
         }

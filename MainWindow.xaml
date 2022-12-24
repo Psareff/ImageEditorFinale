@@ -68,6 +68,7 @@
             <Button Width="25" Height="25" Name="Im" Content="Im"   Foreground="#999999" Background="#222222" BorderThickness="0" Command="local:ImageEditorCustomFunctionalCommands.AddImage"/>
             <Button Width="25" Height="25" Name="Txt" Content="Txt"  Foreground="#999999" Background="#222222" BorderThickness="0" Command="local:ImageEditorCustomFunctionalCommands.AddText"/>
             <Button Width="25" Height="25" Name="Del"  Content="Del"  Foreground="#999999" Background="#222222" BorderThickness="0" Command="local:ImageEditorCustomFunctionalCommands.DeleteItem"/>
+            <Button Width="25" Height="25" Name="Paint"  Content="Pen"  Foreground="#999999" Background="#222222" BorderThickness="0" Command="local:ImageEditorCustomFunctionalCommands.DeleteItem"/>
             <Button Width="25" Height="25" Name="Scale100"  Content="0,0"  Foreground="#999999" Background="#222222" BorderThickness="0" Command="local:ImageEditorCustomFunctionalCommands.CanvasDefaultScale"/>
 
         </StackPanel>
@@ -84,10 +85,6 @@
             <StackPanel Orientation="Horizontal">
                 <TextBlock Text="Text" Foreground="White"/>
                 <TextBox x:Name="TextSetter" Width="50" Height="14" Foreground ="White" Background="Transparent" CommandManager.Executed="ChangeText_Executed" CommandManager.CanExecute="ChangeText_CanExecute"/>
-            </StackPanel>
-            <StackPanel Orientation="Horizontal">
-                <TextBlock Text="Rotate" Foreground="White"/>
-                <TextBox x:Name="RotationSetter" Width="50" Height="14" Foreground ="White" Background="Transparent" CommandManager.Executed="RotateItem_Executed" CommandManager.CanExecute="RotateItem_CanExecute"/>
             </StackPanel>
         </StackPanel>
 

@@ -58,23 +58,15 @@ namespace ImageEditorFinale
         private void CropImage_Executed(object sender, ExecutedRoutedEventArgs e)
         {
             ImageViewModel imageViewModel = workspace.SelectedItem() as ImageViewModel;
-            CropWindow resizeWindow = new CropWindow(imageViewModel);
-            //resizeWindow.Show();
-            /*
-            if (imageViewModel != null && imageViewModel is ImageViewModel)
-            {
-                //(imageViewModel as ImageViewModel)._image.Source;
-            }
-
-            */
+            //CropWindow cropWindow = new CropWindow(image);
         }
         private void RotateItem_Executed(object sender, ExecutedRoutedEventArgs e)
         {
             ImageEditorItem imageEditorItem = workspace.SelectedItem();
             if (imageEditorItem != null)
             {
-                RotateTransform rotateTransform = new RotateTransform(Convert.ToDouble(RotationSetter.Text));
-                imageEditorItem.RenderTransform = rotateTransform;
+                //RotateTransform rotateTransform = new RotateTransform(Convert.ToDouble(RotationSetter.Text));
+                //imageEditorItem.RenderTransform = rotateTransform;
             }
         }
         private void ResizeImage_Executed(object sender, ExecutedRoutedEventArgs e)
@@ -193,9 +185,9 @@ namespace ImageEditorFinale
         private void AddText_Executed(object sender, ExecutedRoutedEventArgs e)
         {
             Trace.WriteLine("Text added");
-            ImageEditorItem text = new ImageEditorItem(new Point(0, 0));
+            TextBoxViewModel text = new TextBoxViewModel();
             _itemAlbum.Items.Add(text);
-            workspace.Children.Add(new TextBoxViewModel(text));
+            workspace.Children.Add(text);
         }
 
         private void DeleteItem_Executed(object sender, ExecutedRoutedEventArgs e)
